@@ -1,6 +1,19 @@
 spring:
   application:
     name: microservice-product
+  jpa:
+    show-sql: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+    hikari:
+      auto-commit: false
+      maximum-pool-size: 3
+      connection-timeout: 30000
+      idle-timeout: 10000
 server:
   port: 4000
 

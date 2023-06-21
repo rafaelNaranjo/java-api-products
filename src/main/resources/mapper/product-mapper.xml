@@ -9,7 +9,11 @@
     </resultMap>
     
     <select id="getAllProducts" resultMap="productMap">
-        select * from public.products
+        select * from public.products p
+        order by p.name
+        limit #{filters.limit}
+        offset #{filters.offset}
+
     </select>
     
 </mapper>

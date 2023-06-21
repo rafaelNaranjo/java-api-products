@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/default.xml"/>
+    <property name="LOGS" value="./logs" />
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+    <springProfile name="local">
+        <logger name="org.springframework.web" level="info" />
+        <logger name="com.rafael.app.product.mapper" level="debug" />
+        <logger name="com.rafael.app.product.rest" level="debug"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+</configuration>

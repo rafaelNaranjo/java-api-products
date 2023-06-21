@@ -17,3 +17,7 @@ spring:
 server:
   port: 4000
 
+logging:
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] %-5level [%t] [%logger - %line]: %m%n"
+

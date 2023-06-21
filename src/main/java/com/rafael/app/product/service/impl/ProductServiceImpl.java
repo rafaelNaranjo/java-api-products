@@ -1,6 +1,7 @@
 package com.rafael.app.product.service.impl;
 
 import com.rafael.app.product.model.Product;
+import com.rafael.app.product.model.ProductFilters;
 import com.rafael.app.product.repository.ProductRepository;
 import com.rafael.app.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.getAllProducts();
+    public List<Product> getAllProducts(ProductFilters filters) {
+        return productRepository.getAllProducts(filters);
     }
 }

@@ -1,6 +1,7 @@
 package com.rafael.app.product.rest;
 
 import com.rafael.app.product.model.Product;
+import com.rafael.app.product.model.ProductFilters;
 import com.rafael.app.product.service.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,7 +32,7 @@ class ProductRestControllerTest {
     @Test
     @DisplayName("Test Products Controller: Get all products")
     void getAllProductsTest() throws Exception {
-        when(productService.getAllProducts()).thenReturn(new ArrayList<Product>());
+        when(productService.getAllProducts(any(ProductFilters.class))).thenReturn(new ArrayList<Product>());
         this.mockMvc.perform(MockMvcRequestBuilders.get("/products"))
                 .andDo(print())
                 .andExpect(status().isOk());

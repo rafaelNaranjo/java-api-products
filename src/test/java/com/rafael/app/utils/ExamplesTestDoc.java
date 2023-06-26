@@ -94,5 +94,55 @@ public class ExamplesTestDoc {
                 instance.method(any());
             });
         }
+
+        @Test
+        void doThrow(){
+            when(anyMethod.methd()).thenReturn(Collections.emptyList());
+
+            doAnswer(invocation -> {
+                long id = invocation.getArgument(0);
+                return
+            }),when(instanceMock).method();
+        }
+
+        @Test
+        void doCallRealMethod(){
+            // call real method of class, this mock class need have a method implementation, an error will occur if class is interface or abstract class.
+            doCallRealMethod().when(instanceMock).method(any());
+        }
+
+        @Test
+        void testSpy(){
+            Class class = spy(ClassImplementation.class);
+            doReturn(data).when(instanceClassImplementation).method(any());
+        }
+
+        @Test
+        void testOrderMethod(){
+            when(instanceClass.method()).thenReturn();
+            instanceClass.method(1l)
+            instanceClass.method(2l)
+            InOrder inOrder = inOrder(otherInstanceCLass,instanceClass);
+            inOrder.verify(otherInstanceCLass).method();
+            inOrder.verify(instaceClass).method(1l);
+            inOrder.verify(otherInstanceCLass).method();
+            inOrder.verify(instaceClass).method(2l);
+
+        }
+
+        @Test
+        void testOrderMethod(){
+
+            verify(instanceClass, times(2l)).method();
+            verify(instanceClass, atLeast(1)).method(1l);
+            verify(instanceClass, atLeastOnce()).method();
+            verify(instanceClass, atMost(1)).method(2l);
+            verify(instanceClass, atMostOne()).method(2l);
+            verify(instanceClass, atMostOne()).method(2l);
+            verify(instanceClass, never()).method(2l);
+            verifyNoInteractions(instanceMockClass);
+
+        }
+
     }*/
 }

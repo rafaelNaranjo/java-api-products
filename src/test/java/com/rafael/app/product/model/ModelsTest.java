@@ -32,5 +32,6 @@ class ModelsTest {
     @Test
     void testModelsProduct() throws Exception {
         TestPojos.validateAccessors(Product.class);
+        TestPojos.validateAccessors(ProductFilters.class);
     }
 }

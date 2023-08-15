@@ -6,17 +6,35 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+variables:  
+  buildConfiguration: 'Release'
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+stages:
+  - stage:
+    displayName: 'Build application'
+    jobs:
+      - job:
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+        - task: Maven@3
+          inputs:
+            mavenPomFile: 'pom.xml'
+            mavenOptions: '-Xmx3072m'
+            javaHomeOption: 'JDKVersion'
+            jdkVersionOption: '1.11'
+            jdkArchitectureOption: 'x64'
+            publishJUnitResults: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            goals: 'package'
+            mavenAuthenticateFeed: true
+        - task: CopyFiles@2
+          displayName: 'Copy jar generate to pipeline artifacts'
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)/target/'
+            Contents: '*.jar'
+            TargetFolder: '$(build.artifactstagingdirectory)/$(buildConfiguration)'
+            CleanTargetFolder: true
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish artifact to release'
+          condition: succeeded()

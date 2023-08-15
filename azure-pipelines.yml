@@ -8,6 +8,8 @@ trigger:
 
 variables:  
   buildConfiguration: 'Release'
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
 
 stages:
   - stage:
@@ -17,6 +19,14 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
+        - task: Cache@2
+          displayName: Cache Maven local repo
+          inputs:
+            key: 'maven | "$(Agent.OS)" | **/pom.xml'
+            restoreKeys: |
+              maven | "$(Agent.OS)"
+              maven
+            path: $(MAVEN_CACHE_FOLDER)
         - task: Maven@3
           inputs:
             mavenPomFile: 'pom.xml'
@@ -28,6 +38,7 @@ stages:
             testResultsFiles: '**/surefire-reports/TEST-*.xml'
             goals: 'package'
             mavenAuthenticateFeed: true
+            options: '$(MAVEN_OPTS)'
         - task: CopyFiles@2
           displayName: 'Copy jar generate to pipeline artifacts'
           inputs:
